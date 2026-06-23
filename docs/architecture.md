@@ -16,8 +16,8 @@ from Instagram.
 - Structured filters support event, season, creative entity, and look tags.
   Filters use AND between filter groups and OR within each group.
 - V1 has no creative entity profile pages.
-- Event, collection, look, and media detail pages are public, server-rendered, and
-  indexable.
+- Event, collection, look, and media detail pages are public, server-rendered,
+  and indexable.
 - Admin tools live under `/admin/*` and are separate from public pages.
 
 ## Platform
@@ -44,9 +44,9 @@ V1 is Cloudflare-first:
 D1 is used directly. Do not add a repository abstraction only to preserve a
 future PostgreSQL migration path.
 
-V1 targets roughly 1,000 events, 20,000 collections, 200,000 looks, and 2 million
-media assets. Use pagination, indexed queries, queued processing, and per-run
-limits.
+V1 targets roughly 1,000 events, 20,000 collections, 200,000 looks, and 2
+million media assets. Use pagination, indexed queries, queued processing, and
+per-run limits.
 
 ## Core Data Model
 
@@ -63,8 +63,8 @@ limits.
 
 - Designers, brands, labels, institutions, and similar creative actors are
   stored in one `entity` table.
-- A creative entity has a display name, social handle (instagram), website, 
-  and optional multi-value classifications.
+- A creative entity has a display name, social handle (instagram), website, and
+  optional multi-value classifications.
 - Automatic matching is only by verified Instagram handle.
 - Handle verification uses web search and public profile-page evidence. Strong
   evidence includes an official website, a trusted organizer page, or an
@@ -80,11 +80,11 @@ limits.
   sources, then other primary sources. Admin edits always win.
 - A collection may have arrays of primary and secondary creative entities,
   represented through relationship rows with role and display order.
-- Primary/secondary roles are inferred from source wording when clear. If unclear,
-  add the entities in as Primary.
+- Primary/secondary roles are inferred from source wording when clear. If
+  unclear, add the entities in as Primary.
 - Group shows are unique collections on their own.
-- Collections are created and published automatically. Ambiguous
-  cases are logged with `needs_review`.
+- Collections are created and published automatically. Ambiguous cases are
+  logged with `needs_review`.
 
 ### Looks, Tags, And Media
 
@@ -95,13 +95,13 @@ limits.
 - Changing a principal garment creates a separate look.
 - Looks have controlled tags only. Tags belong to one category, and looks may
   have multiple tags within and across categories.
-- The tag vocabulary can be managed by admins. Automation may assign existing tags 
-  or may create new tags only when no similar tags exist. The proposed tag must 
-  align with the style and pattern of the existing tag repository.
+- The tag vocabulary can be managed by admins. Automation may assign existing
+  tags or may create new tags only when no similar tags exist. The proposed tag
+  must align with the style and pattern of the existing tag repository.
 - Automated tag assignments publish immediately.
 - Still images normally belong to one look.
-- Videos may belong to multiple looks. Each video-to-look assignment requires one
-  or more verified timestamps whose frames depict the look.
+- Videos may belong to multiple looks. Each video-to-look assignment requires
+  one or more verified timestamps whose frames depict the look.
 - Full videos are stored once. Public look pages show look-specific verified
   timestamp segments.
 
@@ -117,8 +117,7 @@ Canonical URL examples:
 
 - Collection: `/<event-slug>/<collection-slug>`
 - Look: `/<event-slug>/<collection-slug>/<look-id>`
-- Media:
-  `/<event-slug>/<event-id>/<collection-slug>/<look-id>/<media-id>`
+- Media: `/<event-slug>/<event-id>/<collection-slug>/<look-id>/<media-id>`
 
 Public canonical collection, look, and media pages are server-rendered and
 indexable. Admin, workflow, and arbitrary filtered-search URLs are not indexed.
@@ -145,11 +144,11 @@ Meta integration setup is separate from admin login:
 - Tokens are server-side only, encrypted at rest, and never exposed to the
   browser.
 - Store selected Page and Instagram account IDs.
-- Check integration health before ingestion. If invalid or near expiry, block new
-  ingestion runs and require an admin reconnect flow.
+- Check integration health before ingestion. If invalid or near expiry, block
+  new ingestion runs and require an admin reconnect flow.
 
-The admin dashboard shows active and recent workflows, failures requiring review,
-unpublished records, and quick actions for event import and core archive
+The admin dashboard shows active and recent workflows, failures requiring
+review, unpublished records, and quick actions for event import and core archive
 management. V1 excludes analytics.
 
 ## Workflows
@@ -180,13 +179,14 @@ acceptable. No realtime infrastructure is required.
 ### Stage 2: Collection Ingestion
 
 After event discovery, admins may edit collection details and hashtags, then run
-ingestion per collection or in bulk. Each collection gets its own workflow run so
-failures and retries are isolated.
+ingestion per collection or in bulk. Each collection gets its own workflow run
+so failures and retries are isolated.
 
 Hashtag rules:
 
 - The system must never synthesize hashtags.
-- Hashtags are extracted verbatim from real Instagram posts found via web search.
+- Hashtags are extracted verbatim from real Instagram posts found via web
+  search.
 - Hashtag search discovers broad posts, not collection-specific posts.
 - Each post is evaluated independently.
 
@@ -194,8 +194,8 @@ Post eligibility:
 
 - The post timestamp must be on or after the scheduled collection event time.
 - If no collection-specific schedule exists, use the event start date.
-- The default upper bound is 30 days after the anchor date, configurable globally
-  and overridable per event.
+- The default upper bound is 30 days after the anchor date, configurable
+  globally and overridable per event.
 - Relevant creative entities are determined from caption text, tagged or
   mentioned accounts, posting account, and source evidence.
 - If clear creative entities do not match an existing collection, create the
@@ -210,8 +210,8 @@ Media ingestion:
 - New media stays hidden until deduplication and look assignment complete.
 - The resulting look publishes immediately. Tagging is asynchronous and does not
   block publication.
-- If a source Instagram post is deleted or inaccessible later, keep archived media
-  published unless an admin unpublishes it or handles a takedown request.
+- If a source Instagram post is deleted or inaccessible later, keep archived
+  media published unless an admin unpublishes it or handles a takedown request.
 - Source availability is checked lazily when an asset page is visited and cached
   for a configurable interval.
 
@@ -254,4 +254,5 @@ Grouping and tagging:
 - Popular sections on the homepage.
 - Archive-wide similar-look browsing. Retain embeddings for V2.
 - External model provider fallback.
-- Full moderation/review queue. Use structured workflow logs with `needs_review`.
+- Full moderation/review queue. Use structured workflow logs with
+  `needs_review`.

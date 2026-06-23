@@ -3,10 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --watch --import remix/node-tsx server.ts",
-    "start": "node --import remix/node-tsx server.ts",
-    "test": "node --import remix/node-tsx --test",
-    "typecheck": "tsc --noEmit"
+    "dev": "deno run -A --watch server.ts",
+    "start": "deno run -A server.ts",
+    "test": "deno test -A",
+    "typecheck": "deno check server.ts"
   },
   "engines": {
     "node": ">=24.3.0"
