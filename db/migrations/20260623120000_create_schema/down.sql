@@ -1,0 +1,20 @@
+PRAGMA foreign_keys = OFF;
+
+DROP TABLE IF EXISTS workflow_log;
+DROP TABLE IF EXISTS workflow_run;
+DROP TABLE IF EXISTS meta_integration;
+DROP TABLE IF EXISTS session;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS look_media;
+DROP TABLE IF EXISTS media_source;
+DROP TABLE IF EXISTS media;
+DROP TABLE IF EXISTS look_tag;
+DROP TABLE IF EXISTS tag;
+DROP TABLE IF EXISTS look;
+DROP TABLE IF EXISTS collection_entity;
+DROP TABLE IF EXISTS collection;
+DROP TABLE IF EXISTS entity;
+DROP TABLE IF EXISTS event;
+DROP TABLE IF EXISTS season;
+
+PRAGMA foreign_keys = ON;
