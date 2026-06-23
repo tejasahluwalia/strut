@@ -1,0 +1,363 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "Package Control Messages\n========================\n\n\nTheme - Monokai Pro\n-------------------\n\n  Monokai Pro\n  ===========\n  \n  Beautiful functionality for professional developers\n  ---------------------------------------------------\n  \n  Monokai Pro is a color scheme, user interface theme and icon pack for\n  code editors. It has been designed with beautiful functionality in\n  mind. Carefully selected shades of color are the foundation of an\n  uncompromising, non-distractive user interface.\n  \n  **The single goal of Monokai Pro is to let you focus on your code.**\n  \n  Selecting a Monokai Pro theme\n  -----------------------------\n  \n  Open the command palette with `Cmd/Ctrl + Shift + P` and search for\n  `Monokai Pro: select theme`. Selecting a theme will automatically\n  adjust the color scheme, user interface theme and matching icon pack.\n  \n  Customizing Monokai Pro settings\n  --------------------------------\n  \n  Monokai Pro has a couple of extra settings that you can enter in the\n  user preferences of Sublime Text to tweak the theme to your taste.\n  Find out more here: https://monokai.pro/sublime-text\n  \n  One-time registration\n  ---------------------\n  \n  Upgrade your coding environment with a lifetime license to Monokai Pro\n  and remove all pop-up messages. Register now and enjoy forever:\n  https://monokai.pro/sublime-text\n",
+			"settings":
+			{
+				"buffer_size": 1347,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
+			},
+			"undo_stack":
+			[
+				[
+					1,
+					1,
+					"package_control_message",
+					{
+						"message": "\n\nTheme - Monokai Pro\n-------------------\n\n  Monokai Pro\n  ===========\n  \n  Beautiful functionality for professional developers\n  ---------------------------------------------------\n  \n  Monokai Pro is a color scheme, user interface theme and icon pack for\n  code editors. It has been designed with beautiful functionality in\n  mind. Carefully selected shades of color are the foundation of an\n  uncompromising, non-distractive user interface.\n  \n  **The single goal of Monokai Pro is to let you focus on your code.**\n  \n  Selecting a Monokai Pro theme\n  -----------------------------\n  \n  Open the command palette with `Cmd/Ctrl + Shift + P` and search for\n  `Monokai Pro: select theme`. Selecting a theme will automatically\n  adjust the color scheme, user interface theme and matching icon pack.\n  \n  Customizing Monokai Pro settings\n  --------------------------------\n  \n  Monokai Pro has a couple of extra settings that you can enter in the\n  user preferences of Sublime Text to tweak the theme to your taste.\n  Find out more here: https://monokai.pro/sublime-text\n  \n  One-time registration\n  ---------------------\n  \n  Upgrade your coding environment with a lifetime license to Monokai Pro\n  and remove all pop-up messages. Register now and enjoy forever:\n  https://monokai.pro/sublime-text\n"
+					},
+					"AQAAAAAAAAAAAAAAQwUAAAAAAAAAAAAA",
+					"AgAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPC/AAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8L8"
+				]
+			]
+		},
+		{
+			"file": "server.ts",
+			"settings":
+			{
+				"buffer_size": 903,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"enable",
+				"LSP: Enable Language Server in Project"
+			],
+			[
+				"ui",
+				"UI: Customize Theme"
+			],
+			[
+				"mono",
+				"Monokai Pro: select theme"
+			],
+			[
+				"the",
+				"UI: Select Theme"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"LSP: Enab",
+				"LSP: Enable Language Server in Project"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"Package",
+				"Package Control: List Packages"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Enable Package"
+			],
+			[
+				"Enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"package ",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/tejas/Desktop/Code/Projects/strut"
+	],
+	"file_history":
+	[
+		"/home/tejas/Desktop/Code/Projects/strut/server.ts"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1347,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1347,
+								1347
+							]
+						],
+						"settings":
+						{
+							"auto_complete": false,
+							"auto_indent": false,
+							"gutter": false,
+							"lsp_uri": "buffer:44",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"tab_width": 2,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "server.ts",
+					"selected": true,
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 903,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"auto_complete_triggers":
+							[
+								{
+									"characters": "<",
+									"selector": "text.html, text.xml"
+								},
+								{
+									"rhs_empty": true,
+									"selector": "punctuation.accessor"
+								},
+								{
+									"characters": ".\"'`/@<#",
+									"selector": "meta.tag, source - comment - string.quoted.double.block - string.quoted.single.block - string.unquoted.heredoc",
+									"server": "Deno"
+								}
+							],
+							"lsp_active": true,
+							"lsp_uri": "file:///home/tejas/Desktop/Code/Projects/strut/server.ts",
+							"show_definitions": false,
+							"syntax": "Packages/JavaScript/TypeScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.LSP Log Panel":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.diagnostics":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.find_results":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"pinned_build_system": "",
+	"project": "strut.sublime-project",
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"lsp_show_inlay_hints": false
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 233.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
