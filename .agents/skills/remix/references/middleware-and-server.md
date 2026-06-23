@@ -2,51 +2,52 @@
 
 ## What This Covers
 
-How to compose the request lifecycle and bridge the router to a runtime. Read this when the task
-involves:
+How to compose the request lifecycle and bridge the router to a runtime. Read
+this when the task involves:
 
 - Choosing or ordering built-in middleware in the root stack
 - Writing custom middleware that sets typed context values
-- Adding fast-exit handling (static files, CORS preflights) versus request-enriching layers
-  (sessions, auth, data loading)
-- Choosing when to keep the generated Node server versus switching server adapters
+- Adding fast-exit handling (static files, CORS preflights) versus
+  request-enriching layers (sessions, auth, data loading)
+- Choosing when to keep the generated Node server versus switching server
+  adapters
 
-For data and persistence specifics, see `data-and-validation.md`. For session and auth specifics,
-see `auth-and-sessions.md`.
+For data and persistence specifics, see `data-and-validation.md`. For session
+and auth specifics, see `auth-and-sessions.md`.
 
 ## Middleware Stack
 
-Middleware runs in order for every request. Place fast-exit middleware (static files) early and
-request-enriching middleware (session, auth) later.
+Middleware runs in order for every request. Place fast-exit middleware (static
+files) early and request-enriching middleware (session, auth) later.
 
 Recommended ordering:
 
 ```typescript
-import { createRouter } from 'remix/router'
-import { compression } from 'remix/middleware/compression'
-import { formData } from 'remix/middleware/form-data'
-import { logger } from 'remix/middleware/logger'
-import { methodOverride } from 'remix/middleware/method-override'
-import { session } from 'remix/middleware/session'
-import { staticFiles } from 'remix/middleware/static'
-import { asyncContext } from 'remix/middleware/async-context'
+import { createRouter } from "remix/router";
+import { compression } from "remix/middleware/compression";
+import { formData } from "remix/middleware/form-data";
+import { logger } from "remix/middleware/logger";
+import { methodOverride } from "remix/middleware/method-override";
+import { session } from "remix/middleware/session";
+import { staticFiles } from "remix/middleware/static";
+import { asyncContext } from "remix/middleware/async-context";
 
-let middleware = []
+let middleware = [];
 
-if (process.env.NODE_ENV === 'development') {
-  middleware.push(logger())
+if (process.env.NODE_ENV === "development") {
+  middleware.push(logger());
 }
 
-middleware.push(compression())
-middleware.push(staticFiles('./public'))
-middleware.push(formData())
-middleware.push(methodOverride())
-middleware.push(session(cookie, storage))
-middleware.push(asyncContext())
-middleware.push(loadDatabase())
-middleware.push(loadAuth())
+middleware.push(compression());
+middleware.push(staticFiles("./public"));
+middleware.push(formData());
+middleware.push(methodOverride());
+middleware.push(session(cookie, storage));
+middleware.push(asyncContext());
+middleware.push(loadDatabase());
+middleware.push(loadAuth());
 
-let router = createRouter({ middleware })
+let router = createRouter({ middleware });
 ```
 
 ### Built-in middleware catalog
@@ -68,126 +69,134 @@ let router = createRouter({ middleware })
 
 ### Static files vs browser modules
 
-- Use `staticFiles()` for files that should be served directly from disk, such as images, fonts,
-  or already-built assets in `public/`
-- Use `remix/assets` when browser modules should be compiled and served from source files with
-  import rewriting, preloads, or fingerprinted URLs
+- Use `staticFiles()` for files that should be served directly from disk, such
+  as images, fonts, or already-built assets in `public/`
+- Use `remix/assets` when browser modules should be compiled and served from
+  source files with import rewriting, preloads, or fingerprinted URLs
 
 ### Ordering notes
 
-- Put fast exits early: `staticFiles()`, `cors()` preflight handling, and `cop()` when used
-- Parse request bodies before middleware that depends on them, such as `methodOverride()` and form
-  field token extraction in `csrf()`
+- Put fast exits early: `staticFiles()`, `cors()` preflight handling, and
+  `cop()` when used
+- Parse request bodies before middleware that depends on them, such as
+  `methodOverride()` and form field token extraction in `csrf()`
 - Run `session()` before `csrf()` and before session-backed `auth()`
 - Add `asyncContext()` before helpers or shared code call `getContext()`
-- Keep route protection like `requireAuth()` at controller or action scope unless the entire app is
-  private
+- Keep route protection like `requireAuth()` at controller or action scope
+  unless the entire app is private
 
 ### Common stacks
 
-- **Session-backed HTML app** -> `compression()`, `staticFiles()`, optional `cop()`, `formData()`,
-  `methodOverride()`, `session()`, optional `csrf()`, `asyncContext()`, `auth({ schemes })`
-- **Cross-origin API** -> `compression()`, `cors()`, optional `asyncContext()`, optional
-  `auth({ schemes })`
-- **Upload flow** -> `compression()`, `staticFiles()`, `formData({ uploadHandler })`, then
-  sessions, auth, and data-loading middleware as needed
+- **Session-backed HTML app** -> `compression()`, `staticFiles()`, optional
+  `cop()`, `formData()`, `methodOverride()`, `session()`, optional `csrf()`,
+  `asyncContext()`, `auth({ schemes })`
+- **Cross-origin API** -> `compression()`, `cors()`, optional `asyncContext()`,
+  optional `auth({ schemes })`
+- **Upload flow** -> `compression()`, `staticFiles()`,
+  `formData({ uploadHandler })`, then sessions, auth, and data-loading
+  middleware as needed
 
 ### Middleware with options
 
 ```typescript
 // Static files with cache headers
-staticFiles('./public', {
-  cacheControl: 'no-store, must-revalidate',
+staticFiles("./public", {
+  cacheControl: "no-store, must-revalidate",
   etag: false,
   lastModified: false,
-})
+});
 
 // Form data with upload handler
-import type { FileUpload } from 'remix/form-data-parser'
-import { createFsFileStorage } from 'remix/file-storage/fs'
+import type { FileUpload } from "remix/form-data-parser";
+import { createFsFileStorage } from "remix/file-storage/fs";
 
-let fileStorage = createFsFileStorage('./tmp/uploads')
+let fileStorage = createFsFileStorage("./tmp/uploads");
 
 formData({
   uploadHandler(fileUpload: FileUpload) {
-    return fileStorage.set(fileUpload.name, fileUpload)
+    return fileStorage.set(fileUpload.name, fileUpload);
   },
-})
+});
 ```
 
-Errors thrown or rejected by `uploadHandler` propagate directly. Catch domain-specific upload
-errors at the route boundary when they should become user-facing `Response` objects.
+Errors thrown or rejected by `uploadHandler` propagate directly. Catch
+domain-specific upload errors at the route boundary when they should become
+user-facing `Response` objects.
 
 ## Writing Custom Middleware
 
-Middleware is a function that receives `(context, next)`. Return a `Response` to short-circuit, call
-and return `next()` when you need the downstream response, or return nothing when you only set
-context and want the router to continue automatically.
+Middleware is a function that receives `(context, next)`. Return a `Response` to
+short-circuit, call and return `next()` when you need the downstream response,
+or return nothing when you only set context and want the router to continue
+automatically.
 
 ### Setting context values
 
-Use `context.set(key, value)` to add typed values accessible downstream via `context.get(key)`.
+Use `context.set(key, value)` to add typed values accessible downstream via
+`context.get(key)`.
 
 ```typescript
-import type { Middleware } from 'remix/router'
-import { Database } from 'remix/data-table'
+import type { Middleware } from "remix/router";
+import { Database } from "remix/data-table";
 
 export function loadDatabase(): Middleware {
   return async (context, next) => {
-    context.set(Database, db)
-    return next()
-  }
+    context.set(Database, db);
+    return next();
+  };
 }
 ```
 
 ### Guarding routes
 
 ```typescript
-import { Auth } from 'remix/middleware/auth'
+import { Auth } from "remix/middleware/auth";
 
 export function requireAdmin(): Middleware {
   return (context, next) => {
-    let auth = context.get(Auth)
-    if (auth.identity?.role !== 'admin') {
-      return new Response('Forbidden', { status: 403 })
+    let auth = context.get(Auth);
+    if (auth.identity?.role !== "admin") {
+      return new Response("Forbidden", { status: 403 });
     }
-    return next()
-  }
+    return next();
+  };
 }
 ```
 
 ### Async context for helpers
 
-`asyncContext()` stores the request context in `AsyncLocalStorage` so helpers can reach it
-without the context being threaded through every call. Wrap `getContext()` in app-specific
-helpers:
+`asyncContext()` stores the request context in `AsyncLocalStorage` so helpers
+can reach it without the context being threaded through every call. Wrap
+`getContext()` in app-specific helpers:
 
 ```typescript
 // app/utils/context.ts
-import { getContext } from 'remix/middleware/async-context'
-import { Auth } from 'remix/middleware/auth'
-import { Database } from 'remix/data-table'
-import { Session } from 'remix/session'
+import { getContext } from "remix/middleware/async-context";
+import { Auth } from "remix/middleware/auth";
+import { Database } from "remix/data-table";
+import { Session } from "remix/session";
 
 export function getCurrentDb() {
-  return getContext().get(Database)
+  return getContext().get(Database);
 }
 
 export function getCurrentSession() {
-  return getContext().get(Session)
+  return getContext().get(Session);
 }
 
 export function getCurrentUser() {
-  let auth = getContext().get(Auth)
+  let auth = getContext().get(Auth);
   if (!auth.ok) {
-    throw new Error('Expected an authenticated user. Run requireAuth() before this code.')
+    throw new Error(
+      "Expected an authenticated user. Run requireAuth() before this code.",
+    );
   }
-  return auth.identity
+  return auth.identity;
 }
 
 export function getCurrentUserSafely() {
-  let auth = getContext().get(Auth)
-  return auth.ok ? auth.identity : null
+  let auth = getContext().get(Auth);
+  return auth.ok ? auth.identity : null;
 }
 ```
 
@@ -210,23 +219,23 @@ Middleware can be applied at three levels:
    })
    ```
 
-   Controller middleware does not flow into other controllers. Add the middleware to each
-   controller that needs it.
+   Controller middleware does not flow into other controllers. Add the
+   middleware to each controller that needs it.
 
 3. **Action-level** — runs for a single route:
    ```typescript
    router.get(routes.account.index, {
      middleware: [requireAuth()],
      handler: accountAction.handler,
-   })
+   });
    ```
 
 ## Node Server Setup
 
 New apps already include a `server.ts` that adapts the app router with
-`remix/node-fetch-server`. Keep that generated server unless the task specifically needs to change
-runtime behavior such as host/protocol handling, TLS, HTTP/2, WebSockets, deployment lifecycle, or
-test-only server setup.
+`remix/node-fetch-server`. Keep that generated server unless the task
+specifically needs to change runtime behavior such as host/protocol handling,
+TLS, HTTP/2, WebSockets, deployment lifecycle, or test-only server setup.
 
-Use `remix/node-fetch-server` when you want to keep owning a standard Node `http`, `https`, or
-`http2` server directly.
+Use `remix/node-fetch-server` when you want to keep owning a standard Node
+`http`, `https`, or `http2` server directly.
