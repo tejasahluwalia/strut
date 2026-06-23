@@ -95,10 +95,10 @@ limits.
 - Changing a principal garment creates a separate look.
 - Looks have controlled tags only. Tags belong to one category, and looks may
   have multiple tags within and across categories.
-- The tag vocabulary is managed by admins. Automation may assign existing tags
-  only; it must not create tags.
-- High-confidence automated tag assignments publish immediately. Uncertain tags
-  are omitted.
+- The tag vocabulary can be managed by admins. Automation may assign existing tags 
+  or may create new tags only when no similar tags exist. The proposed tag must 
+  align with the style and pattern of the existing tag repository.
+- Automated tag assignments publish immediately.
 - Still images normally belong to one look.
 - Videos may belong to multiple looks. Each video-to-look assignment requires one
   or more verified timestamps whose frames depict the look.
@@ -107,20 +107,18 @@ limits.
 
 ## URLs And SEO
 
-Use readable slugs followed by stable public IDs. IDs resolve records; stale
-slugs redirect to canonical URLs.
+Use readable slugs.
 
-- Stable public IDs are 12-character URL-safe Nano IDs.
 - D1 integer IDs remain internal.
 - Events and collections have slugs.
 - Looks and media use IDs only.
 
 Canonical URL examples:
 
-- Collection: `/<event-slug>/<event-id>/<collection-slug>/<collection-id>`
-- Look: `/<event-slug>/<event-id>/<collection-slug>/<collection-id>/l/<look-id>`
+- Collection: `/<event-slug>/<collection-slug>`
+- Look: `/<event-slug>/<collection-slug>/<look-id>`
 - Media:
-  `/<event-slug>/<event-id>/<collection-slug>/<collection-id>/l/<look-id>/m/<media-id>`
+  `/<event-slug>/<event-id>/<collection-slug>/<look-id>/<media-id>`
 
 Public canonical collection, look, and media pages are server-rendered and
 indexable. Admin, workflow, and arbitrary filtered-search URLs are not indexed.
@@ -138,8 +136,6 @@ Auth is application-owned Facebook OAuth, not a Cloudflare auth product.
 - Use 30-day sliding sessions.
 - Regenerate session IDs on login and logout.
 - Use CSRF tokens for all admin mutating forms.
-- Re-check Facebook Page/admin eligibility on login and periodically during
-  session use.
 
 Meta integration setup is separate from admin login:
 
