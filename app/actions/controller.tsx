@@ -5,15 +5,15 @@ import { routes } from "../routes.ts";
 import { PublicHomePage } from "./home.tsx";
 
 export default createController(routes, {
-  actions: {
-    async assets(context) {
-      return (
-        (await assetServer.fetch(context.request)) ??
-          new Response("Not Found", { status: 404 })
-      );
-    },
-    home(context) {
-      return context.render(<PublicHomePage />);
-    },
-  },
+	actions: {
+		async assets(context) {
+			return (
+				(await assetServer.fetch(context.request)) ??
+				new Response("Not Found", { status: 404 })
+			);
+		},
+		home(context) {
+			return context.render(<PublicHomePage />);
+		},
+	},
 });

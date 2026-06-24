@@ -4,7 +4,10 @@
   viewBox="0 0 144 144"
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
+  role="img"
+  aria-label="Strut Favicon"
 >
+  <title>Strut Favicon</title>
   <rect width="144" height="144" rx="72" fill="black" />
   <g clip-path="url(#clip0_2008_2428)">
     <path

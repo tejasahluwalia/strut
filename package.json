@@ -1,22 +1,23 @@
 {
-  "name": "strut",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "deno run -A --env --watch server.ts",
-    "start": "deno run -A --env server.ts",
-    "test": "deno test -A --env",
-    "typecheck": "deno check server.ts"
-  },
-  "engines": {
-    "node": ">=24.3.0"
-  },
-  "dependencies": {
-    "remix": "^3.0.0-beta.4"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.5.0",
-    "@types/node": "latest",
-    "typescript": "latest"
-  }
+	"name": "strut",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "deno run -A --env --watch server.ts",
+		"start": "deno run -A --env server.ts",
+		"test": "deno test -A --env",
+		"typecheck": "deno check server.ts",
+		"lint": "deno run -A npm:@biomejs/biome check --write"
+	},
+	"engines": {
+		"node": ">=24.3.0"
+	},
+	"dependencies": {
+		"remix": "^3.0.0-beta.4"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.0",
+		"@types/node": "latest",
+		"typescript": "latest"
+	}
 }
