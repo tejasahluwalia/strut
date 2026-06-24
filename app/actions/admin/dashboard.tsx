@@ -1,4 +1,6 @@
+import { type Handle } from "remix/ui";
 import { css } from "remix/ui";
+import { theme } from "remix/ui/theme";
 
 import { Document } from "../../ui/document.tsx";
 import { SiteHeader } from "../../ui/header.tsx";
@@ -40,7 +42,7 @@ export function AdminDashboardPage() {
             </h1>
             <p
               mix={css({
-                color: "hsl(var(--muted-foreground))",
+                color: theme.colors.text.muted,
                 margin: 0,
                 maxWidth: "42rem",
               })}
@@ -77,14 +79,16 @@ function AdminHead() {
   );
 }
 
-function DashboardTile() {
-  return ({ label, count }: { label: string; count: string }) => (
+function DashboardTile(handle: Handle<{ label: string; count: string }>) {
+  return () => {
+    let { label, count } = handle.props;
+    return (
     <Card>
       <CardHeader>
         <CardTitle
           mix={css({
             fontSize: "1rem",
-            color: "hsl(var(--muted-foreground))",
+            color: theme.colors.text.muted,
             fontWeight: 500,
           })}
         >
@@ -104,4 +108,5 @@ function DashboardTile() {
       </CardContent>
     </Card>
   );
+};
 }

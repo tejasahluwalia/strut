@@ -1,46 +1,46 @@
-import { css } from "remix/ui";
+import { css, type Handle } from "remix/ui";
+import { theme } from "remix/ui/theme";
 
 type AlertProps = JSX.IntrinsicElements["div"] & {
   variant?: "default" | "destructive";
 };
 
-export function Alert() {
-  return ({ variant = "default", ...props }: AlertProps) => {
-    let variants: any = {
-      default: {
-        backgroundColor: "hsl(var(--background))",
-        color: "hsl(var(--foreground))",
-        border: "1px solid hsl(var(--border))",
-      },
-      destructive: {
-        border: "1px solid hsl(var(--destructive) / 0.5)",
-        color: "hsl(var(--destructive))",
-      },
-    };
-
-    let baseStyles: any = {
-      position: "relative",
-      width: "100%",
-      borderRadius: "var(--radius)",
-      padding: "1rem",
-      fontSize: "0.875rem",
-      display: "flex",
-      flexDirection: "column",
-      gap: "0.25rem",
-    };
-
-    return (
-      <div
-        role="alert"
-        mix={css({ ...baseStyles, ...variants[variant] })}
-        {...props}
-      />
-    );
+export function Alert(handle: Handle<AlertProps>) {
+  let { variant = "default", ...props } = handle.props;
+  let variants: any = {
+    default: {
+      backgroundColor: theme.surface.lvl0,
+      color: theme.colors.text.primary,
+      border: `1px solid ${theme.colors.border.default}`,
+    },
+    destructive: {
+      border: `1px solid ${theme.colors.action.danger.background}`,
+      color: theme.colors.action.danger.background,
+    },
   };
+
+  let baseStyles: any = {
+    position: "relative",
+    width: "100%",
+    borderRadius: theme.radius.md,
+    padding: "1rem",
+    fontSize: "0.875rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.25rem",
+  };
+
+  return (
+    <div
+      role="alert"
+      mix={css({ ...baseStyles, ...variants[variant] })}
+      {...handle.props}
+    />
+  );
 }
 
-export function AlertTitle() {
-  return (props: JSX.IntrinsicElements["h5"]) => (
+export function AlertTitle(handle: Handle<JSX.IntrinsicElements["h5"]>) {
+  return () => (
     <h5
       mix={css({
         margin: 0,
@@ -48,19 +48,19 @@ export function AlertTitle() {
         lineHeight: 1,
         letterSpacing: "-0.025em",
       })}
-      {...props}
+      {...handle.props}
     />
   );
 }
 
-export function AlertDescription() {
-  return (props: JSX.IntrinsicElements["div"]) => (
+export function AlertDescription(handle: Handle<JSX.IntrinsicElements["div"]>) {
+  return () => (
     <div
       mix={css({
         margin: 0,
         opacity: 0.9,
       })}
-      {...props}
+      {...handle.props}
     />
   );
 }

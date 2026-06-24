@@ -1,16 +1,17 @@
-import { css } from "remix/ui";
+import { css, type Handle } from "remix/ui";
+import { theme } from "remix/ui/theme";
 
-export function Label() {
-  return (props: JSX.IntrinsicElements["label"]) => (
+export function Label(handle: Handle<JSX.IntrinsicElements["label"]>) {
+  return () => (
     <label
       mix={css({
         fontSize: "0.875rem",
         fontWeight: 500,
         lineHeight: 1,
-        color: "hsl(var(--foreground))",
-        cursor: props.htmlFor ? "pointer" : "default",
+        color: theme.colors.text.primary,
+        cursor: handle.props.htmlFor ? "pointer" : "default",
       })}
-      {...props}
+      {...handle.props}
     />
   );
 }

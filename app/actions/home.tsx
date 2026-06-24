@@ -1,4 +1,5 @@
-import { css } from "remix/ui";
+import { css, type Handle } from "remix/ui";
+import { theme } from "remix/ui/theme";
 
 import { routes } from "../routes.ts";
 import { Document } from "../ui/document.tsx";
@@ -124,22 +125,22 @@ function PublicHomeHead() {
   );
 }
 
-function Placeholder() {
-  return ({ title }: { title: string }) => (
+function Placeholder(handle: Handle<{ title: string }>) {
+  return () => (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>{handle.props.title}</CardTitle>
       </CardHeader>
       <CardContent>
         <div
           mix={css({
             height: "100px",
-            backgroundColor: "hsl(var(--muted))",
-            borderRadius: "var(--radius)",
+            backgroundColor: theme.surface.lvl3,
+            borderRadius: theme.radius.md,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            color: "hsl(var(--muted-foreground))",
+            color: theme.colors.text.muted,
             fontSize: "0.875rem",
           })}
         >

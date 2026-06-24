@@ -1,4 +1,6 @@
+import { type Handle } from "remix/ui";
 import { css, type RemixNode } from "remix/ui";
+import { theme } from "remix/ui/theme";
 
 type ButtonProps = JSX.IntrinsicElements["button"] & {
   variant?: "primary" | "secondary" | "outline" | "ghost" | "destructive";
@@ -6,14 +8,15 @@ type ButtonProps = JSX.IntrinsicElements["button"] & {
   children?: RemixNode;
 };
 
-export function Button() {
-  return ({ variant = "primary", size = "md", ...props }: ButtonProps) => {
+export function Button(handle: Handle<ButtonProps>) {
+  return () => {
+    let { variant = "primary", size = "md", ...props } = handle.props;
     let baseStyles: any = {
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
       whiteSpace: "nowrap",
-      borderRadius: "calc(var(--radius) - 2px)",
+      borderRadius: theme.radius.sm,
       fontSize: "0.875rem",
       fontWeight: 500,
       transition: "colors 0.15s ease-in-out",
@@ -27,39 +30,39 @@ export function Button() {
 
     let variants: any = {
       primary: {
-        backgroundColor: "hsl(var(--primary))",
-        color: "hsl(var(--primary-foreground))",
+        backgroundColor: theme.colors.action.primary.background,
+        color: theme.colors.action.primary.foreground,
         ":hover": {
-          backgroundColor: "hsl(var(--primary) / 0.9)",
+          backgroundColor: theme.colors.action.primary.backgroundHover,
         },
       },
       secondary: {
-        backgroundColor: "hsl(var(--secondary))",
-        color: "hsl(var(--secondary-foreground))",
+        backgroundColor: theme.colors.action.secondary.background,
+        color: theme.colors.action.secondary.foreground,
         ":hover": {
-          backgroundColor: "hsl(var(--secondary) / 0.8)",
+          backgroundColor: theme.colors.action.secondary.backgroundHover,
         },
       },
       destructive: {
-        backgroundColor: "hsl(var(--destructive))",
-        color: "hsl(var(--destructive-foreground))",
+        backgroundColor: theme.colors.action.danger.background,
+        color: theme.colors.action.danger.foreground,
         ":hover": {
-          backgroundColor: "hsl(var(--destructive) / 0.9)",
+          backgroundColor: theme.colors.action.danger.backgroundHover,
         },
       },
       outline: {
-        border: "1px solid hsl(var(--input))",
-        backgroundColor: "hsl(var(--background))",
+        border: `1px solid ${theme.colors.border.default}`,
+        backgroundColor: theme.surface.lvl0,
         ":hover": {
-          backgroundColor: "hsl(var(--accent))",
-          color: "hsl(var(--accent-foreground))",
+          backgroundColor: theme.surface.lvl1,
+          color: theme.colors.text.primary,
         },
       },
       ghost: {
         backgroundColor: "transparent",
         ":hover": {
-          backgroundColor: "hsl(var(--accent))",
-          color: "hsl(var(--accent-foreground))",
+          backgroundColor: theme.surface.lvl1,
+          color: theme.colors.text.primary,
         },
       },
     };
@@ -74,7 +77,7 @@ export function Button() {
     return (
       <button
         mix={css({ ...baseStyles, ...variants[variant], ...sizes[size] })}
-        {...props}
+        {...handle.props}
       />
     );
   };

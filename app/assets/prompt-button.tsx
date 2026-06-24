@@ -1,10 +1,5 @@
-import {
-  clientEntry,
-  css,
-  type Handle,
-  on,
-  type SerializableProps,
-} from "remix/ui";
+import { clientEntry, css, type Handle, on, type SerializableProps } from "remix/ui";
+import { theme } from "remix/ui/theme";
 
 const FADE_MS = 180;
 const HOLD_MS = 1200;
@@ -36,8 +31,8 @@ export const PromptButton = clientEntry(
           type="button"
           className={state}
           style={{
-            background: active ? "var(--surface-4)" : undefined,
-            color: active ? "var(--brand-blue)" : undefined,
+            background: active ? theme.surface.lvl4 : undefined,
+            color: active ? theme.colors.action.primary.background : undefined,
           }}
           mix={[
             buttonStyle,
@@ -144,12 +139,12 @@ const buttonStyle = css({
   padding: "16px",
   border: 0,
   borderRadius: "12px",
-  color: "var(--text-primary)",
+  color: theme.colors.text.primary,
   background: "transparent",
   transition: "background-color 150ms ease, color 150ms ease",
   "&:hover, &:focus-visible": {
-    background: "var(--surface-4)",
-    color: "var(--brand-blue)",
+    background: theme.surface.lvl4,
+    color: theme.colors.action.primary.background,
     outline: "none",
   },
 });

@@ -1,9 +1,5 @@
-import {
-  css,
-  type RemixNode,
-  type Handle,
-  type SerializableProps,
-} from "remix/ui";
+import { css, type RemixNode, type Handle, type SerializableProps } from "remix/ui";
+import { theme } from "remix/ui/theme";
 import { routes } from "../routes.ts";
 
 interface SiteHeaderProps extends SerializableProps {
@@ -18,8 +14,8 @@ export function SiteHeader(handle: Handle<SiteHeaderProps>) {
         top: 0,
         zIndex: 50,
         width: "100%",
-        borderBottom: "1px solid hsl(var(--border))",
-        backgroundColor: "hsl(var(--background) / 0.95)",
+        borderBottom: `1px solid ${theme.colors.border.default}`,
+        backgroundColor: `color-mix(in srgb, ${theme.surface.lvl0} 95%, transparent)`,
         backdropFilter: "blur(8px)",
       })}
     >
@@ -40,7 +36,7 @@ export function SiteHeader(handle: Handle<SiteHeaderProps>) {
             mix={css({
               fontWeight: 700,
               fontSize: "1.25rem",
-              color: "hsl(var(--foreground))",
+              color: theme.colors.text.primary,
               textDecoration: "none",
               letterSpacing: "-0.025em",
             })}
@@ -56,10 +52,10 @@ export function SiteHeader(handle: Handle<SiteHeaderProps>) {
                 background: "transparent",
                 border: "none",
                 fontSize: "0.875rem",
-                color: "hsl(var(--muted-foreground))",
+                color: theme.colors.text.muted,
                 cursor: "pointer",
                 "&:hover": {
-                  color: "hsl(var(--foreground))",
+                  color: theme.colors.text.primary,
                 },
               })}
             >

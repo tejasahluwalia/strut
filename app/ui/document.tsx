@@ -1,4 +1,5 @@
-import { css, type RemixNode } from "remix/ui";
+import { css, type RemixNode, type Handle } from "remix/ui";
+import { Theme } from "./theme.ts";
 
 import { routes } from "../routes.ts";
 
@@ -10,14 +11,16 @@ export interface DocumentProps {
 
 const DEFAULT_TITLE = readAppDisplayName("Strut");
 
-export function Document() {
-  return ({ children, head, title = DEFAULT_TITLE }: DocumentProps) => (
+export function Document(handle: Handle<DocumentProps>) {
+  return () => {
+    let { children, head, title = DEFAULT_TITLE } = handle.props;
+    return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="stylesheet" href="/global.css" />
+        <Theme />
         <title>{title}</title>
         {head}
       </head>
@@ -30,7 +33,8 @@ export function Document() {
         </script>
       </body>
     </html>
-  );
+    );
+  };
 }
 
 function readAppDisplayName(value: string): string {

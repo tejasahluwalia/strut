@@ -1,4 +1,5 @@
 import { css, type Handle, type SerializableProps } from "remix/ui";
+import { theme } from "remix/ui/theme";
 
 import { Document } from "../../../ui/document.tsx";
 import { SiteHeader } from "../../../ui/header.tsx";
@@ -49,7 +50,7 @@ export function AdminLoginPage(handle: Handle<AdminLoginPageProps>) {
             </CardHeader>
             <CardContent>
               {errorMessage && (
-                <div mix={css({ color: "hsl(var(--destructive))", marginBottom: "1rem", fontSize: "0.875rem", textAlign: "center" })}>
+                <div mix={css({ color: theme.colors.action.danger.background, marginBottom: "1rem", fontSize: "0.875rem", textAlign: "center" })}>
                   {errorMessage}
                 </div>
               )}
