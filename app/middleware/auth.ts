@@ -12,6 +12,7 @@ export const facebookProvider = createFacebookAuthProvider({
 	clientId: env.FACEBOOK_APP_ID,
 	clientSecret: env.FACEBOOK_APP_SECRET,
 	redirectUri: new URL("/admin/auth/facebook/callback", env.APP_ORIGIN),
+	scopes: [""],
 });
 
 export async function verifySession(value: { sessionId: string } | null) {

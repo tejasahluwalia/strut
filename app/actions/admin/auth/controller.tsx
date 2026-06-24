@@ -21,8 +21,7 @@ export default createController(routes.admin.auth, {
 				await db.delete(sessionTable, auth.sessionId);
 			}
 
-			session.unset("auth");
-			session.regenerateId(true);
+			session.destroy();
 			return redirect(routes.admin.auth.login.href());
 		},
 	},

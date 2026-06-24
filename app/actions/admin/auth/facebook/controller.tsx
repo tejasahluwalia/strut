@@ -1,4 +1,3 @@
-import * as crypto from "node:crypto";
 import {
 	completeAuth,
 	finishExternalAuth,
@@ -6,6 +5,7 @@ import {
 } from "remix/auth";
 import { redirect } from "remix/response/redirect";
 import { createController } from "remix/router";
+import { createSessionId } from "remix/session";
 import { db } from "../../../../data/db.ts";
 import {
 	meta_integration as metaIntegrationTable,
@@ -30,7 +30,6 @@ export default createController(routes.admin.auth.facebook, {
 				// Facebook Login for Business requires config_id and strictly forbids the scope parameter
 				// (the config_id inherently defines the requested scopes on Meta's end)
 				url.searchParams.set("config_id", env.FACEBOOK_CONFIG_ID);
-				url.searchParams.delete("scope");
 
 				const newHeaders = new Headers(response.headers);
 				newHeaders.set("Location", url.toString());
@@ -105,7 +104,7 @@ export default createController(routes.admin.auth.facebook, {
 			}
 
 			// 2. Generate opaque session token
-			const sessionId = crypto.randomBytes(32).toString("hex");
+			const sessionId = createSessionId();
 			const thirtyDaysInSeconds = 30 * 24 * 60 * 60;
 			const expiresAt = nowInSeconds + thirtyDaysInSeconds;
 
