@@ -37,15 +37,6 @@ export function PublicHomePage() {
               gap: "0.5rem",
             })}
           >
-            <p
-              mix={css({
-                color: "hsl(var(--muted-foreground))",
-                fontWeight: 500,
-                margin: 0,
-              })}
-            >
-              Indian fashion archive
-            </p>
             <h1
               mix={css({
                 fontSize: "3rem",
@@ -55,7 +46,7 @@ export function PublicHomePage() {
                 lineHeight: 1.1,
               })}
             >
-              Strut
+              Indian Fashion Archive
             </h1>
           </div>
           <search>
@@ -76,9 +67,7 @@ export function PublicHomePage() {
                   gap: "0.5rem",
                 })}
               >
-                <Label htmlFor="site-search">
-                  Search the archive
-                </Label>
+                <Label htmlFor="site-search">Search the archive</Label>
                 <div mix={css({ display: "flex", gap: "0.5rem" })}>
                   <Input
                     id="site-search"

@@ -1,12 +1,17 @@
-import { css, type RemixNode } from "remix/ui";
+import {
+  css,
+  type RemixNode,
+  type Handle,
+  type SerializableProps,
+} from "remix/ui";
 import { routes } from "../routes.ts";
 
-interface SiteHeaderProps {
+interface SiteHeaderProps extends SerializableProps {
   isAdmin?: boolean;
 }
 
-export function SiteHeader() {
-  return ({ isAdmin = false }: SiteHeaderProps) => (
+export function SiteHeader(handle: Handle<SiteHeaderProps>) {
+  return () => (
     <header
       mix={css({
         position: "sticky",
@@ -42,53 +47,26 @@ export function SiteHeader() {
           >
             Strut
           </a>
-          {isAdmin && (
-            <span
-              mix={css({
-                fontSize: "0.875rem",
-                color: "hsl(var(--muted-foreground))",
-                marginLeft: "0.5rem",
-              })}
-            >
-              Admin
-            </span>
-          )}
         </div>
-
-        <nav
-          mix={css({ display: "flex", alignItems: "center", gap: "1.5rem" })}
-        >
-          {!isAdmin && (
-            <a
-              href={routes.admin.auth.login.href()}
+        {handle.props.isAdmin && (
+          <form method="POST" action={routes.admin.auth.logout.href()}>
+            <button
+              type="submit"
               mix={css({
+                background: "transparent",
+                border: "none",
                 fontSize: "0.875rem",
-                fontWeight: 500,
                 color: "hsl(var(--muted-foreground))",
-                textDecoration: "none",
-                transition: "color 0.15s ease",
-                ":hover": { color: "hsl(var(--foreground))" },
+                cursor: "pointer",
+                "&:hover": {
+                  color: "hsl(var(--foreground))",
+                },
               })}
             >
-              Admin
-            </a>
-          )}
-          {isAdmin && (
-            <a
-              href={routes.home.href()}
-              mix={css({
-                fontSize: "0.875rem",
-                fontWeight: 500,
-                color: "hsl(var(--muted-foreground))",
-                textDecoration: "none",
-                transition: "color 0.15s ease",
-                ":hover": { color: "hsl(var(--foreground))" },
-              })}
-            >
-              Public site
-            </a>
-          )}
-        </nav>
+              Sign out
+            </button>
+          </form>
+        )}
       </div>
     </header>
   );

@@ -1,8 +1,8 @@
-import { css, type Handle } from "remix/ui";
+import { css, type Handle, type SerializableProps } from "remix/ui";
 
 import { Document } from "../../../ui/document.tsx";
 import { SiteHeader } from "../../../ui/header.tsx";
-import { Alert, AlertDescription, AlertTitle } from "../../../ui/alert.tsx";
+import { Button } from "../../../ui/button.tsx";
 import {
   Card,
   CardContent,
@@ -10,16 +10,23 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../ui/card.tsx";
+import { routes } from "../../../routes.ts";
 
-interface AdminLoginPageProps {
-  appId?: string;
-  configId?: string;
+interface AdminLoginPageProps extends SerializableProps {
+  error?: string | null;
 }
 
 export function AdminLoginPage(handle: Handle<AdminLoginPageProps>) {
   return () => {
-    let { appId, configId } = handle.props;
-    let canRenderFacebookButton = Boolean(appId && configId);
+    let error = handle.props.error;
+    let errorMessage = '';
+    if (error === 'access_denied') {
+      errorMessage = 'Login was cancelled. Please authorize the app to continue.';
+    } else if (error === 'oauth_failed') {
+      errorMessage = 'An error occurred during login. Please try again.';
+    } else if (error) {
+      errorMessage = `Login failed: ${error}`;
+    }
 
     return (
       <Document title="Admin login | Strut" head={<AdminHead />}>
@@ -41,22 +48,16 @@ export function AdminLoginPage(handle: Handle<AdminLoginPageProps>) {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {canRenderFacebookButton
-                ? (
-                  <FacebookLoginButton
-                    appId={appId as string}
-                    configId={configId as string}
-                  />
-                )
-                : (
-                  <Alert variant="default">
-                    <AlertTitle>Configuration required</AlertTitle>
-                    <AlertDescription>
-                      Facebook login is waiting for Meta app configuration.
-                      Please set up the appropriate environment variables.
-                    </AlertDescription>
-                  </Alert>
-                )}
+              {errorMessage && (
+                <div mix={css({ color: "hsl(var(--destructive))", marginBottom: "1rem", fontSize: "0.875rem", textAlign: "center" })}>
+                  {errorMessage}
+                </div>
+              )}
+              <form method="GET" action={routes.admin.auth.facebook.login.href()}>
+                <Button type="submit" mix={css({ width: "100%" })}>
+                  Log in with Facebook
+                </Button>
+              </form>
             </CardContent>
           </Card>
         </main>
@@ -69,41 +70,6 @@ function AdminHead() {
   return () => (
     <>
       <meta name="robots" content="noindex,nofollow" />
-    </>
-  );
-}
-
-function FacebookLoginButton() {
-  return ({ appId, configId }: { appId: string; configId: string }) => (
-    <>
-      <div id="fb-root" />
-      <div
-        className="fb-login-button"
-        data-config_id={configId}
-        data-size="large"
-        data-button-type="login_with"
-        data-layout="default"
-        data-auto-logout-link="false"
-        data-use-continue-as="false"
-      />
-      <script>
-        {`
-window.fbAsyncInit = function() {
-  FB.init({
-    appId: ${JSON.stringify(appId)},
-    cookie: true,
-    xfbml: true,
-    version: 'v20.0'
-  });
-};
-        `.trim()}
-      </script>
-      <script
-        async
-        defer
-        crossOrigin="anonymous"
-        src="https://connect.facebook.net/en_US/sdk.js"
-      />
     </>
   );
 }

@@ -3,9 +3,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "deno run -A --watch server.ts",
-    "start": "deno run -A server.ts",
-    "test": "deno test -A",
+    "dev": "deno run -A --env --watch server.ts",
+    "start": "deno run -A --env server.ts",
+    "test": "deno test -A --env",
     "typecheck": "deno check server.ts"
   },
   "engines": {

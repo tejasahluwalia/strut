@@ -1,8 +1,5 @@
 # Strut Agent Guide
 
-This app was scaffolded with `remix new`. Use these conventions when continuing
-to build it out.
-
 ## Commands
 
 ```sh
@@ -15,7 +12,7 @@ deno task typecheck
 
 ## Building Features
 
-Refer to ./.agents/skills/remix/SKILL.md
+*Important* Refer to ./.agents/skills/remix/SKILL.md
 
 ## References and Styling
 
@@ -30,6 +27,8 @@ Refer to ./.agents/skills/remix/SKILL.md
   in `app/ui/document.tsx`). Use these variables (e.g., `hsl(var(--primary))` or
   `hsl(var(--primary) / 0.5)`) when styling components to maintain a consistent
   theme and support dark mode out of the box.
+- Use https://github.com/remix-run/remix/tree/main/demos/bookstore as the reference
+  remix app.
 
 ## Starter Layout
 
