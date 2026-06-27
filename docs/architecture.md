@@ -22,7 +22,9 @@ from Instagram.
 
 ## Platform
 
-V1 is Cloudflare-first:
+**Note for v0:** Cloudflare integrations (Workers AI, Vectorize, R2, etc.) are excluded for the initial v0 build. The app will be built to run locally before moving to Cloudflare in later versions.
+
+V1 targets a Cloudflare-first architecture (to be fully implemented post-v0):
 
 - Workers run the Remix app, admin portal, API endpoints, and workflow code.
 - D1 stores relational application data.
@@ -153,6 +155,8 @@ management. V1 excludes analytics.
 
 ## Workflows
 
+**Crucial Rule for v0**: The workflows are heavily human-in-the-loop. There must be manual gate checks (admin reviews) **after every single step** in the discovery and ingestion pipelines. Because of this heavily stateful and interrupt-driven process, we will build a custom database-backed workflow runner to manage workflow state, pausing, and resuming.
+
 ### Stage 1: Event Discovery
 
 Admins start an import with a minimal form containing an event URL and optional
@@ -215,12 +219,10 @@ Media ingestion:
 - Source availability is checked lazily when an asset page is visited and cached
   for a configurable interval.
 
-Deduplication:
+Deduplication & Image Similarity:
 
-- Use deterministic pixel-level similarity for images after normalizing
-  orientation and dimensions.
-- Collapse strict image duplicates to the highest-quality or largest asset while
-  preserving all source-post links.
+- Use perceptual hashing algorithms (like pHash/dHash, similar to what TinEye uses) for image similarity and deduplication, after normalizing orientation and dimensions.
+- Collapse strict and highly-similar image duplicates to the highest-quality or largest asset while preserving all source-post links.
 - Keep crops, screenshots, edits, and genuinely different frames separate.
 - For videos, store originals and generated posters/sampled frames. Detect exact
   video duplicates using file hash plus duration.
@@ -228,11 +230,9 @@ Deduplication:
 Grouping and tagging:
 
 - Look grouping happens incrementally as posts arrive.
-- Use Workers AI visual embeddings and Vectorize to compare against existing
-  looks within the current collection only.
+- Use perceptual hashing algorithms (e.g., TinEye-like image similarity) to compare against existing looks within the current collection only.
 - Low-confidence grouping creates a new look.
-- Workers AI handles controlled tag assignment. If Cloudflare AI cannot
-  confidently complete a step, skip unsafe writes and log `needs_review`.
+- Tag assignment is evaluated manually or via a local model. If uncertain, skip unsafe writes and log `needs_review`.
 
 ## Logs And LLM Controls
 

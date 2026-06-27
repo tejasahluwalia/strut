@@ -2,7 +2,7 @@ import { css, type Handle } from "remix/ui";
 import { theme } from "remix/ui/theme";
 
 type AlertProps = JSX.IntrinsicElements["div"] & {
-	variant?: "default" | "destructive";
+	variant?: "default" | "destructive" | "warning" | "info";
 };
 
 export function Alert(handle: Handle<AlertProps>) {
@@ -17,6 +17,14 @@ export function Alert(handle: Handle<AlertProps>) {
 			border: `1px solid ${theme.colors.action.danger.background}`,
 			color: theme.colors.action.danger.background,
 		},
+		warning: {
+			border: "1px solid #d97706",
+			color: "#d97706",
+		},
+		info: {
+			border: "1px solid #2563eb",
+			color: "#2563eb",
+		},
 	};
 
 	const baseStyles = {
@@ -30,7 +38,7 @@ export function Alert(handle: Handle<AlertProps>) {
 		gap: "0.25rem",
 	};
 
-	return (
+	return () => (
 		<div
 			role="alert"
 			mix={css({ ...baseStyles, ...variants[variant] })}

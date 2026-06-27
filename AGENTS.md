@@ -1,5 +1,9 @@
 # Strut Agent Guide
 
+Use the docs/to-do.md as your progress tracker.
+Keep the docs/to-do.md and docs/architecture.md up-to-date with the actual codebase.
+Tend towards small feature implementations. Ask questions when you're unsure about any specifics, never assume intent.
+
 ## Commands
 
 ```sh
@@ -12,7 +16,7 @@ deno task typecheck
 
 ## Building Features
 
-*Important* Refer to ./.agents/skills/remix/SKILL.md
+*Important* Use the remix skill.
 
 ## References and Styling
 

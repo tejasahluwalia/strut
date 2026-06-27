@@ -35,7 +35,12 @@ export const router = createRouter<AppContext>({
 	],
 });
 
+import adminCollectionsController from "./actions/admin/collections/controller.tsx";
+import adminWorkflowsController from "./actions/admin/workflows/controller.tsx";
+
 router.map(routes, controller);
 router.map(routes.admin, adminController);
 router.map(routes.admin.auth, adminAuthController);
 router.map(routes.admin.auth.facebook, adminAuthFacebookController);
+router.map(routes.admin.workflows, adminWorkflowsController);
+router.map(routes.admin.collections, adminCollectionsController);

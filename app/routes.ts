@@ -13,6 +13,17 @@ export const routes = route({
 			}),
 		}),
 		dashboard: get("dashboard"),
+		workflows: route("workflows", {
+			index: get(""),
+			new: post("new"),
+			status: get("status"),
+			show: get(":id"),
+			approve: post(":id/approve"),
+		}),
+		collections: route("collections", {
+			index: get(""),
+			ingest: post("ingest"),
+		}),
 		fallback: get("*path"),
 	}),
 	home: "/",

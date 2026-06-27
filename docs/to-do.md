@@ -1,28 +1,28 @@
 # To Do
 
-## Admin Auth
+## v0 Requirements
+- [ ] Implement perceptual hashing (pHash/dHash, similar to TinEye) for image similarity, deduplication, and grouping.
+- [ ] Remove/bypass Cloudflare integrations (Workers AI, Vectorize, R2, etc.) for the initial v0 local build.
 
-- Add D1 tables for admin users, external auth accounts, OAuth state/PKCE
-  transactions, and opaque app sessions.
-- Implement Facebook Login for Business authorization-code callback with state
-  and PKCE validation.
-- Exchange the Facebook authorization code server-side and resolve the returned
-  Facebook account to an authorized admin.
-- Store only the opaque app session ID in the `strut_admin_session` HttpOnly,
-  Secure, SameSite=Lax, Path=/ cookie.
-- Persist 30-day sliding sessions in D1 and regenerate session IDs on login,
-  logout, and privilege changes.
-- Replace the temporary cookie-presence guard in
-  `app/actions/admin/controller.tsx` with `remix/session`, `remix/auth`, and
-  D1-backed identity verification.
-- Add CSRF tokens to all admin mutating forms before admin write actions are
-  introduced.
-- Add logout and expired-session handling once real sessions exist.
+## Custom Workflow Implementation
+Implement a highly stateful, Human-In-The-Loop (HITL) workflow using a custom database-backed state machine.
 
-## Admin Dashboard Data
+### 1. Setup & Infrastructure
+- [x] Implement a custom workflow runner with an SQLite database (using `better-sqlite3`, Deno KV, or Deno SQLite) to persist workflow state and suspend/resume data.
+- [ ] Set up the core framework for defining "Steps" that can return an output, error out, or `suspend()` with a payload awaiting human review.
+- [ ] Setup the AI integration using the `ai` (AI SDK) or directly interacting with OpenAI.
 
-- Query active and recent workflow runs.
-- Query workflow failures and `needs_review` logs.
-- Query unpublished events, collections, looks, and media.
-- Add event import and archive-management quick actions after the underlying
-  tables and workflow routes exist.
+### 2. The Custom Workflow (HITL Pipeline)
+Build a single, continuous workflow pipeline utilizing the custom runner's `.suspend()` equivalent to enforce admin review gates after every step.
+
+- [ ] **Step 1: Event Discovery.** Agent parses the input URL -> Checks database -> Yields an `EventProposal` (existing or new). **[Suspend for Human Approval]**
+- [ ] **Step 2: Identify Collections.** Agent extracts raw collection names from the event data -> Yields `CollectionProposals`. **[Suspend for Human Approval]**
+- [ ] **Step 3: Propose Entities.** For each collection, agent proposes existing or new creative entities -> Yields `EntityProposals`. **[Suspend for Human Approval]**
+- [ ] **Step 4: Search Criteria.** For each collection, agent proposes Instagram search rules (hashtags, exact matches, handles) -> Yields `SearchCriteriaProposals`. **[Suspend for Human Approval]**
+- [ ] **Step 5: Media Collection.** Agent searches Instagram using approved criteria -> Yields `MediaProposals`. **[Suspend for Human Approval]**
+- [ ] **Step 6: Categorize & Tag.** Agent processes the approved media to create Looks and assign appropriate tags.
+
+### 3. Remix UI Wiring (Suspend/Resume)
+- [x] Update `/admin/workflows` to initiate the custom pipeline.
+- [ ] Create a dynamic Review Dashboard that queries suspended workflow states from SQLite.
+- [ ] Implement step-specific approval forms allowing admins to edit the LLM's proposals and submit. Submitting will trigger a `resume()` function to progress the workflow.

@@ -4,7 +4,8 @@
     "npm:@biomejs/biome@^2.5.0": "2.5.1",
     "npm:@types/node@latest": "26.0.0",
     "npm:remix@^3.0.0-beta.4": "3.0.0-beta.4_@emnapi+core@1.11.0_@emnapi+runtime@1.11.0",
-    "npm:typescript@latest": "6.0.3"
+    "npm:typescript@latest": "6.0.3",
+    "npm:zod@^4.4.3": "4.4.3"
   },
   "npm": {
     "@biomejs/biome@2.5.1": {
@@ -1304,6 +1305,9 @@
         "@types/istanbul-lib-coverage",
         "convert-source-map"
       ]
+    },
+    "zod@4.4.3": {
+      "integrity": "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="
     }
   },
   "workspace": {
@@ -1312,7 +1316,8 @@
         "npm:@biomejs/biome@^2.5.0",
         "npm:@types/node@latest",
         "npm:remix@^3.0.0-beta.4",
-        "npm:typescript@latest"
+        "npm:typescript@latest",
+        "npm:zod@^4.4.3"
       ]
     }
   }
